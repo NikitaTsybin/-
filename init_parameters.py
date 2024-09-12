@@ -15,7 +15,7 @@ init_data = pd.DataFrame([
 
 st.write('Ниже записано общее решение уравнения изгиба балки с применением метода начальных параметров')
 st.write(
-    '''$EI \\cdot v_i(x) = EI \\cdot v_{i-1}(x) +EI \\cdot \\Delta v  + EI \\cdot \\Delta \\varphi \\cdot (x - x_i) - \\dfrac{\\Delta M \\ cdot (x - x_i)^2}{2!} - \\dfrac{\\Delta Q \\cdot (x - x_i)^3}{3!} +  \\dfrac{(q_i - q_{i-1}) \\cdot (x - x_i)^4}{4!} $''')
+    '''$EI \\cdot v_i(x) = EI \\cdot v_{i-1}(x) +EI \\cdot \\Delta v  + EI \\cdot \\Delta \\varphi \\cdot (x - x_i) - \\dfrac{\\Delta M \\cdot (x - x_i)^2}{2!} - \\dfrac{\\Delta Q \\cdot (x - x_i)^3}{3!} +  \\dfrac{(q_i - q_{i-1}) \\cdot (x - x_i)^4}{4!} $''')
 
 column_conf = {
         'xi': st.column_config.NumberColumn('xi', help='Координата начала участка', format='%.2f', required=True, default=0),
