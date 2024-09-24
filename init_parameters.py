@@ -15,7 +15,7 @@ init_data = pd.DataFrame([
 
 st.write('Ниже записано общее решение уравнения изгиба балки с применением метода начальных параметров')
 st.write(
-    '''$EI \\cdot v_i(x) = EI \\cdot v_{i-1}(x) +EI \\cdot \\Delta v  + EI \\cdot \\Delta \\varphi \\cdot (x - x_i) - \\dfrac{\\Delta M \\cdot (x - x_i)^2}{2!} - \\dfrac{\\Delta Q \\cdot (x - x_i)^3}{3!} +  \\dfrac{(q_i - q_{i-1}) \\cdot (x - x_i)^4}{4!} $''')
+    '''$EI \\cdot v_i(x) = EI \\cdot v_{i-1}(x) + EI \\cdot \\Delta \\varphi_i (x - x_i) - \\dfrac{\\Delta M_i (x - x_i)^2}{2!} - \\dfrac{\\Delta Q_i (x - x_i)^3}{3!} +  \\dfrac{(q_i - q_{i-1}) (x - x_i)^4}{4!} $''')
 
 column_conf = {
         'xi': st.column_config.NumberColumn('xi', help='Координата начала участка', format='%.2f', required=True, default=0),
@@ -90,11 +90,24 @@ for i in range(num_of_elements):
 
 ##def plots():
 fig = make_subplots(rows = 2,cols = 2, subplot_titles=['Перемещения v*EI', 'Углы поворота φ*EI', 'Момент Mz', 'Поперечная сила Qy'])
+
 for i in range(num_of_elements):
-    fig.add_trace(go.Scatter(x=points[i], y=v[i], showlegend=False, line=dict(color = "LightSkyBlue")), row = 1, col = 1)
-    fig.add_trace(go.Scatter(x=points[i], y=f[i], showlegend=False, line=dict(color = "LightSkyBlue")), row = 1, col = 2)
-    fig.add_trace(go.Scatter(x=points[i], y=M[i], showlegend=False, line=dict(color = "LightSkyBlue")), row = 2, col = 1)
-    fig.add_trace(go.Scatter(x=points[i], y=Q[i], showlegend=False, line=dict(color = "LightSkyBlue")), row = 2, col = 2)
+    fig.add_trace(go.Scatter(x=points[i], y=v[i], showlegend=False, line=dict(color = "LightSkyBlue"), fill='tozeroy'), row = 1, col = 1)
+    fig.add_trace(go.Scatter(x=points[i], y=f[i], showlegend=False, line=dict(color = "LightSkyBlue"), fill='tozeroy'), row = 1, col = 2)
+    fig.add_trace(go.Scatter(x=points[i], y=M[i], showlegend=False, line=dict(color = "LightSkyBlue"), fill='tozeroy'), row = 2, col = 1)
+    fig.add_trace(go.Scatter(x=points[i], y=Q[i], showlegend=False, line=dict(color = "LightSkyBlue"), fill='tozeroy'), row = 2, col = 2)
+
+for ii in xi_arr:
+    for j in [1,2]:
+        for k in [1,2]:
+            fig.add_vline(
+                x=ii,
+                line_width=1,
+                line_dash="solid",
+                line_color='red',
+                row=j,
+                col=k,
+                )
 
 fig.update_yaxes(autorange="reversed", row=1, col=1)
 fig.update_yaxes(autorange="reversed", row=1, col=2)
@@ -108,6 +121,7 @@ fig.update_layout(height=500)
 ##st.write(1)
 
 st.plotly_chart(fig)
+##st.write(xi_arr)
 
 
 
